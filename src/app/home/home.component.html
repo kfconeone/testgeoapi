@@ -1,0 +1,104 @@
+<div class="p-4">
+  <mat-card class="w-60 text-end">
+    <mat-card-content>
+      <div class="">
+        <div class="w-full grid grid-cols-2">
+          <div>經度</div>
+          <div>{{ coordinates.longitude }}</div>
+        </div>
+        <hr />
+
+        <div class="w-full grid grid-cols-2">
+          <div>緯度</div>
+          <div>{{ coordinates.latitude }}</div>
+        </div>
+        <hr />
+        <div class="w-full grid grid-cols-2">
+          <div>海拔</div>
+          <div>{{ coordinates.altitude }}</div>
+        </div>
+        <hr />
+        <div class="w-full grid grid-cols-2">
+          <div>誤差公尺</div>
+          <div>{{ coordinates.accuracy }}</div>
+        </div>
+        <hr />
+        {{ exactAddress }}
+
+        <div class="flex gap-4">
+          <button
+            class="w-full"
+            mat-raised-button
+            color="accent"
+            (click)="onRefreshClicked()"
+          >
+            刷新位置
+          </button>
+
+          <button
+            class="w-full"
+            mat-raised-button
+            color="primary"
+            (click)="onClockInClicked()"
+          >
+            打卡
+          </button>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <br />
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef>使用者</th>
+        <td mat-cell *matCellDef="let element">{{ element.username }}</td>
+      </ng-container>
+      <ng-container matColumnDef="longitude">
+        <th mat-header-cell *matHeaderCellDef>經度</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.coordinates.longitude }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="latitude">
+        <th mat-header-cell *matHeaderCellDef>緯度</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.coordinates.latitude }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="accuracy">
+        <th mat-header-cell *matHeaderCellDef>誤差公尺</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.coordinates.accuracy }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="altitude">
+        <th mat-header-cell *matHeaderCellDef>海拔</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.coordinates.altitude }}
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="address">
+        <th mat-header-cell *matHeaderCellDef>住址</th>
+        <td mat-cell *matCellDef="let element">{{ element.address }}</td>
+      </ng-container>
+      <ng-container matColumnDef="datetime">
+        <th mat-header-cell *matHeaderCellDef>時間</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.datetime | date : "yyyy/MM/dd HH:mm:ss" }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</div>

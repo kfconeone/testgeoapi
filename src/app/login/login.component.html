@@ -1,0 +1,42 @@
+<div class="w-full h-screen flex justify-center items-center">
+  <mat-card class="w-96 p-4">
+    <mat-card-content>
+      <form
+        class="flex flex-col gap-4"
+        [formGroup]="loginForm"
+        (ngSubmit)="onLoginSubmitted()"
+      >
+        <mat-form-field class="w-full">
+          <mat-label>使用者名稱</mat-label>
+          <input
+            type="text"
+            matInput
+            [errorStateMatcher]="matcher"
+            formControlName="username"
+            placeholder=""
+          />
+          <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+          @if (loginForm.get('username')!.hasError('required')) {
+          <mat-error>請輸入使用者名稱</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-form-field class="w-full">
+          <mat-label>密碼</mat-label>
+          <input
+            type="password"
+            matInput
+            [errorStateMatcher]="matcher"
+            formControlName="password"
+            placeholder=""
+          />
+          <!-- <mat-hint>Errors appear instantly!</mat-hint> -->
+          @if (loginForm.get('password')!.hasError('required')) {
+          <mat-error>密碼不得為空</mat-error>
+          }
+        </mat-form-field>
+        <button class="w-full" mat-raised-button color="primary">登入</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
