@@ -88,7 +88,7 @@ export class HomeComponent implements OnInit {
   async onRefreshClicked() {
     this.coordinates = await this.getLocation();
     this.rawAddress = await this.getAddress();
-    this.getExtractAddress();
+    // this.getExtractAddress();
   }
 
   async getLocation(): Promise<Coordinates> {
@@ -103,11 +103,13 @@ export class HomeComponent implements OnInit {
   }
 
   async getAddress() {
-    return await firstValueFrom(
+    let response = await firstValueFrom(
       this.http.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.coordinates.latitude},${this.coordinates.longitude}&key=${process.env['GOOGLE_MAPS_API_KEY']}`
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${this.coordinates.latitude},${this.coordinates.longitude}&key=AIzaSyAerf3BexrgA20P-Y0urJJCJvxDNLs0ETQ`
       )
     );
+    console.log(response);
+    return response;
   }
 
   getExtractAddress() {
