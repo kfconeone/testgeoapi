@@ -65,6 +65,10 @@ export class HomeComponent implements OnInit {
       accuracy: -1,
       altitude: -1,
     };
+    let cachedData = localStorage.getItem('clockInData');
+    if (cachedData) {
+      this.dataSource = JSON.parse(cachedData);
+    }
   }
   async ngOnInit() {
     this.coordinates = await this.getLocation();
@@ -82,7 +86,7 @@ export class HomeComponent implements OnInit {
     };
 
     this.dataSource = [...this.dataSource, clockInData];
-    console.log(clockInData);
+    localStorage.setItem('clockInData', JSON.stringify(this.dataSource));
   }
 
   async onRefreshClicked() {
