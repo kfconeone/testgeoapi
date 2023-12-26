@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { firstValueFrom } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { UserManagementService } from '../user-management.service';
 
@@ -96,7 +96,16 @@ export class HomeComponent implements OnInit {
   }
 
   async getLocation(): Promise<Coordinates> {
-    let position = await firstValueFrom(this.geolocation$);
+    let position: any = await firstValueFrom(
+      new Observable((observer) => {
+        navigator.geolocation.getCurrentPosition(
+          (pos) => observer.next(pos),
+          (err) => observer.error(err),
+          { enableHighAccuracy: true }
+        );
+      })
+    );
+    console.log(position);
 
     return {
       longitude: position.coords.longitude,
